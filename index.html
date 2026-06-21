@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechLedger — CTC Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="calc-root">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-name">CTC Caluculator</div>
+        <div class="brand-sub">INDIA</div>
+      </div>
+      <div class="nav-item active"><i class="ti ti-calculator"></i> Salary Calculator</div>
+      <div class="nav-item"><i class="ti ti-chart-pie"></i> Tax Breakdown</div>
+      <div class="nav-item"><i class="ti ti-bulb"></i> Optimization</div>
+      <div class="nav-item"><i class="ti ti-settings"></i> Settings</div>
+      <div class="sidebar-footer">
+        <div class="dev-box">
+          <div class="dev-label">Developer</div>
+          <div class="dev-name">Ujwal Anil Bagalkoti</div>
+          <div class="dev-email">uabagalkoti@gmail.com</div>
+        </div>
+        <div class="user-row">
+          <div class="avatar">JD</div>
+          <div>
+            <div class="user-name">John Doe</div>
+            <div class="user-plan"></div>
+          </div>
+        </div>
+        <a class="hero-btn" href="https://digitalheroesco.com" target="_blank" rel="noopener">Built for Digital Heroes</a>
+      </div>
+    </aside>
+
+    <header class="main-header">
+      <h1>Salary Calculator</h1>
+      <p>Analyze your annual compensation with Bengaluru's most precise tax engine — FY 2024-25.</p>
+    </header>
+
+    <div class="main-content">
+      <!-- CTC Input -->
+      <div class="card">
+        <div class="label-caps">Annual CTC (Gross)</div>
+        <div class="ctc-wrap">
+          <span class="ctc-prefix">₹</span>
+          <input type="text" id="ctcInput" value="25,00,000" aria-label="Annual CTC in rupees" />
+        </div>
+      </div>
+
+      <!-- Regime + Sliders -->
+      <div class="card">
+        <div class="regime-row">
+          <div class="regime-info">
+            <h3>Tax Regime Selection</h3>
+            <p>Choose your preferred tax calculation method</p>
+          </div>
+          <div class="toggle-group" role="group" aria-label="Tax regime">
+            <button class="toggle-btn active" id="btnOld" onclick="setRegime('old')">OLD<br>REGIME</button>
+            <button class="toggle-btn" id="btnNew" onclick="setRegime('new')">NEW<br>REGIME</button>
+          </div>
+        </div>
+        <div class="sliders-grid">
+          <div>
+            <div class="slider-label">
+              <span class="slider-name">EPF Contribution</span>
+              <span class="slider-val" id="epfPct">12%</span>
+            </div>
+            <input type="range" id="epfSlider" min="0" max="12" step="1" value="12" oninput="updateEPF(this.value)" aria-label="EPF %" />
+            <div class="slider-hint">Employer match remains standard 12%</div>
+          </div>
+          <div>
+            <div class="slider-label">
+              <span class="slider-name">Gratuity %</span>
+              <span class="slider-val" id="gratPct">4.81%</span>
+            </div>
+            <input type="range" id="gratSlider" min="0" max="10" step="0.01" value="4.81" oninput="updateGrat(this.value)" aria-label="Gratuity %" />
+          </div>
+        </div>
+        <div class="extras-row">
+          <div>
+            <div class="label-caps">Professional Tax</div>
+            <div class="amt-badge">₹200 / mo</div>
+            <div class="prof-tax-row">
+              <input type="checkbox" id="profTaxCb" checked onchange="calculate()" />
+              <label for="profTaxCb">Deduct automatically</label>
+            </div>
+          </div>
+          <div>
+            <div class="label-caps">Investment Declarations</div>
+            <div class="amt-badge" id="invTotal">₹1,50,000</div>
+            <div id="invPanel" class="inv-panel">
+              <div class="inv-row"><label>80C (ELSS/PPF/LIC)</label><input type="number" id="sec80c" value="150000" max="150000" oninput="calculate()" /></div>
+              <div class="inv-row"><label>80D (Health Ins.)</label><input type="number" id="sec80d" value="0" max="100000" oninput="calculate()" /></div>
+              <div class="inv-row"><label>HRA Exemption</label><input type="number" id="secHRA" value="0" oninput="calculate()" /></div>
+              <div class="inv-row"><label>NPS 80CCD(1B)</label><input type="number" id="sec80ccd" value="0" max="50000" oninput="calculate()" /></div>
+            </div>
+            <button class="inv-btn" id="invBtn" onclick="toggleInv()">
+              <i class="ti ti-pencil"></i> Edit 80C / 80D
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Distribution Bar -->
+      <div class="card">
+        <div class="dist-label">Salary Distribution</div>
+        <div class="bar-chart" role="img" aria-label="Salary distribution">
+          <div class="bar-seg" id="barInHand" style="background:#1a2b3c;flex:55"><span class="bar-seg-label">In-Hand</span></div>
+          <div class="bar-seg" id="barTax" style="background:#ba1a1a;flex:15"><span class="bar-seg-label">Tax</span></div>
+          <div class="bar-seg" id="barEPF" style="background:#3b6934;flex:18"><span class="bar-seg-label">EPF</span></div>
+          <div class="bar-seg" id="barOther" style="background:#b4b2a9;flex:12"><span class="bar-seg-label">Other</span></div>
+        </div>
+        <div class="bar-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#1a2b3c"></div> In-Hand</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#ba1a1a"></div> Income Tax</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#3b6934"></div> EPF (both)</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#b4b2a9"></div> Gratuity + Prof. Tax</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="right-panel">
+      <div class="result-card">
+        <div class="quick-badge">Quick Result</div>
+        <div class="monthly-label">Monthly Take-Home</div>
+        <div class="monthly-val" id="monthlyTakeHome">—</div>
+        <div class="regime-hint" id="regimeHint"><i class="ti ti-loader"></i> Calculating…</div>
+        <hr class="result-divider" />
+        <div class="result-row"><span class="result-row-label">Annual In-Hand</span><span class="result-row-val" id="annualInHand">—</span></div>
+        <div class="result-row"><span class="result-row-label">Gross Salary</span><span class="result-row-val" id="grossSalary">—</span></div>
+        <div class="result-row"><span class="result-row-label">Tax Liability</span><span class="result-row-val neg" id="taxLiability">—</span></div>
+        <div class="result-row"><span class="result-row-label">Effective Tax Rate</span><span class="result-row-val" id="effectiveTax">—</span></div>
+        <button class="dl-btn" onclick="window.print()">
+          <i class="ti ti-download"></i> Download Tax Report
+        </button>
+      </div>
+
+      <div class="hint-card">
+        <h4><i class="ti ti-bulb"></i> Optimizer Hint</h4>
+        <p id="hintText">Enter your CTC above to see which regime saves you more.</p>
+      </div>
+
+      <div class="breakdown-card">
+        <div class="breakdown-title">Annual Deductions Breakdown</div>
+        <div class="breakdown-row"><span class="breakdown-item">Employee EPF</span><span class="breakdown-amt" id="bEmpEPF">—</span></div>
+        <div class="breakdown-row"><span class="breakdown-item">Employer EPF</span><span class="breakdown-amt" id="bEmprEPF">—</span></div>
+        <div class="breakdown-row"><span class="breakdown-item">Gratuity</span><span class="breakdown-amt" id="bGrat">—</span></div>
+        <div class="breakdown-row"><span class="breakdown-item">Professional Tax</span><span class="breakdown-amt" id="bProfTax">—</span></div>
+        <div class="breakdown-row"><span class="breakdown-item">Standard Deduction</span><span class="breakdown-amt" id="bStd">—</span></div>
+        <div class="breakdown-row"><span class="breakdown-item">Income Tax + Cess</span><span class="breakdown-amt neg" id="bTax">—</span></div>
+        <div class="breakdown-row"><span class="breakdown-item">Total Deducted</span><span class="breakdown-amt neg" id="bTotal">—</span></div>
+      </div>
+
+      <div class="slab-card">
+        <div class="slab-title" id="slabTitle">Tax Slabs — Old Regime</div>
+        <div id="slabRows"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="calculator.js"></script>
+</body>
+</html>
