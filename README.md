@@ -91,7 +91,7 @@ stitch_india_take_home_calculator/
 
 ```bash
 # Clone the repo
-git clone https://github.com/YOUR_USERNAME/techledger-ctc-calculator.git
+git clone https://github.com/UjwalBagalkoti/techledger-ctc-calculator.git
 
 # Navigate into the folder
 cd techledger-ctc-calculator
@@ -142,11 +142,7 @@ No dependencies. No build tools. No npm install. Just open and use.
 
 ---
 
-## 🦸 Built for Digital Heroes
 
-[![Built for Digital Heroes](https://img.shields.io/badge/Built%20for-Digital%20Heroes-3b6934?style=for-the-badge)](https://digitalheroesco.com)
-
----
 
 ## 📄 License
 
