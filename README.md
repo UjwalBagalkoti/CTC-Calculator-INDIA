@@ -8,7 +8,7 @@ TechLedger is an India CTC Salary Calculator for FY 2024-25 that instantly compu
 
 ## 🔗 Live Demo
 
-> Open `index.html` in any browser — no build step required.
+> https://ctc-calculator-india.vercel.app
 
 ---
 
