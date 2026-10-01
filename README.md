@@ -1,6 +1,6 @@
 # TechLedger — India CTC Take-Home Salary Calculator
 
-> Precision Fintech | FY 2024-25
+> Educational salary estimator using FY 2024–25 tax assumptions.
 
 TechLedger is an India CTC Salary Calculator for FY 2024-25 that instantly computes your real monthly take-home from gross CTC. It factors in EPF, gratuity, professional tax, and income tax across Old & New regimes with 80C/80D/HRA/NPS deductions, and recommends the regime that saves you the most.
 
@@ -91,10 +91,10 @@ stitch_india_take_home_calculator/
 
 ```bash
 # Clone the repo
-git clone https://github.com/UjwalBagalkoti/techledger-ctc-calculator.git
+git clone https://github.com/UjwalBagalkoti/CTC-Calculator-INDIA.git
 
 # Navigate into the folder
-cd techledger-ctc-calculator
+cd CTC-Calculator-INDIA
 
 # Open in browser
 open index.html
@@ -115,6 +115,10 @@ No dependencies. No build tools. No npm install. Just open and use.
 | Icons | Tabler Icons CDN |
 
 ---
+
+## ⚠️ Accuracy & Limitations
+
+The implemented tax slabs are for **FY 2024–25** and may not reflect current Indian tax rules. Actual take-home depends on salary structure, EPF treatment, exemptions, professional-tax rules and other payroll details. This tool is for estimation and education, not tax advice.
 
 ## 📋 Example Breakdown (₹25,00,000 CTC — Old Regime)
 
